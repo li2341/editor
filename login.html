@@ -1,0 +1,75 @@
+﻿<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./login.css">
+<title>登录</title>
+</head>
+<body>
+    <div class="container">
+        <form action="./login.php" class="login-form" method="post">
+            <h2>登 录</h2>
+            <input type="text" name="username" placeholder="用户名" />
+            <input type="password" name="password" placeholder="密 码"/>
+            <button id="myForm">登录</button>
+        </form>
+    </div>
+    </div>
+</body>
+<script src="./jquery-3.6.3.min.js"></script>
+
+<script type="text/javascript">
+    
+    //发起请求
+  $('#myForm').click(function(e){
+      e.preventDefault(); // 阻止表单提交  
+      // 获取输入框的值
+      var username = $('input[name="username"]').val();
+      var lengthUsername=username.length;
+      
+      // 获取选择框的值
+      var password = $('input[name="password"]').val();
+      var lengthPassword=password.length;  
+      //lengthUsername要在5-10位之间   lengthUsername>=5 &&  lengthUsername<=10
+      //lengthPassword要在6-18位之间   lengthPassword>=6 &&  lengthPassword<=8  
+      if((lengthUsername>=1&&  lengthUsername<=10) && (lengthPassword>=1 && lengthPassword<=18)){  
+          $.ajax({
+      		url:"./login.php",
+      		async:true,
+      		data:{
+                  "username":username,
+                  "password":password
+              },
+      		type:"POST",
+      		dataType:"text",
+      		success:function(data){
+      			// alert(data);   
+                
+                // console.log(data)
+
+                res=JSON.parse(data)
+                url=res.url
+                msg=res.msg
+
+                if(url==""){
+                    alert(msg)
+                }else{
+                    alert(msg)
+
+                    // 做一个页面跳转
+                    window.location.href=url
+                }
+
+                console.log(msg)
+                console.log(url)
+
+
+                 
+      		}
+      	});  
+      }  
+        
+       
+  });
+
+</script>
+</html>
